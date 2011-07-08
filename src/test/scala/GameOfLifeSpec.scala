@@ -24,53 +24,30 @@ class GameOfLifeSpec extends FunSuite with ShouldMatchers {
     dead(Vector(Alive, Alive, Alive, Alive)) should be(Dead)
   }
 
-  test("given a lifecell we should be able to deduce its next stage") {
-    val clock = BigBang
-    val perfectCell = LifeCell(Alive, Vector(LifeCell(Alive, Vector(), clock),LifeCell(Alive, Vector(), clock),LifeCell(Alive, Vector(), clock)), clock)
-    TimedLifeCycle(perfectCell)(clock tik).state should be (Alive)
-    val overcrowdedCell = LifeCell(Alive, Vector(LifeCell(Alive, Vector(), clock),LifeCell(Alive, Vector(), clock),LifeCell(Alive, Vector(), clock),LifeCell(Alive, Vector(), clock)), clock)
-    TimedLifeCycle(overcrowdedCell)(clock.tik).state should be (Dead)
-    val deadCell = LifeCell(Alive, Vector(LifeCell(Alive, Vector(), clock),LifeCell(Alive, Vector(), clock),LifeCell(Alive, Vector(), clock)), clock)
-    TimedLifeCycle(deadCell)(clock.tik).state should be (Alive)
-  }
-
   test("directions always returns 8 coordinates") {
-    val ofCoordinates: Vector[(Int, Int)] = NewColony(3, 3).neighbourhoodCoordinates(1, 1)
+    val colony: MapRowsColsColony = PrototypeColony(3, 3, GaussianDice)
+    val ofCoordinates: Vector[(Int, Int)] = PrototypeColony(3, 3, GaussianDice).neighbourhoodCoordinates(1, 1)
     ofCoordinates.size should be (Directions.size)
   }
 
   test("colony gets all the nearest neighbours") {
-    val colony: NewColony = NewColony(3, 3)
+    val colony: MapRowsColsColony = PrototypeColony(3, 3, GaussianDice)
     val cell = colony.cell(2,2)
-    val validNeighbours = colony.neighbours(cell).filter(
-      _ match {
-        case Some(x) => true
-        case _ => false
-      }
-    )
+    val validNeighbours = colony.neighbours(cell)
     validNeighbours.size should be (Directions.size)
   }
 
   test("colony gets only valid nearest neighbours") {
-    val colony: NewColony = NewColony(3, 3)
+    val colony: MapRowsColsColony = PrototypeColony(3, 3, GaussianDice)
     val cell = colony.cell(1,1)
-    val validNeighbours = colony.neighbours(cell).filter(
-      _ match {
-        case Some(x) => true
-        case _ => false
-      }
-    )
+    val validNeighbours = colony.neighbours(cell)
     validNeighbours.size should be (3)
   }
 
-
   test("test new colony") {
-    val colony: ModelColony = PrimordialSoup(10, 10, GaussianDice)
+    val colony: Colony = PrimordialSoup(10, 10, GaussianDice)
     println(colony)
     println(colony.mutate)
     0 should be (0)
   }
-
-
-
 }
