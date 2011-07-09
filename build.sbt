@@ -18,4 +18,4 @@ pollInterval := 1000
 // append -deprecation to the options passed to the Scala compiler
 //scalacOptions ++= Seq("-deprecation", "-unchecked", "-verbose", "-explaintypes", "-optimise", "-Xcheck-null", "-Xcheckinit", "-Xlog-implicits", "-Ydead-code", "-Yinline", "-Ystatistics", "-Ywarn-dead-code", "-Ytyper-debug")
 //scalacOptions ++= Seq("-Xprint:typer","-deprecation", "-unchecked","-explaintypes", "-optimise", "-Xlog-implicits", "-Ydead-code", "-Yinline", "-Ywarn-dead-code")
-scalacOptions ++= Seq("-deprecation", "-unchecked","-explaintypes", "-optimise", "-Ydead-code", "-Yinline", "-Ywarn-dead-code")
+scalacOptions ++= Seq("-Xprint:typer", "-deprecation", "-unchecked","-explaintypes", "-optimise", "-Ydead-code", "-Yinline", "-Ywarn-dead-code")

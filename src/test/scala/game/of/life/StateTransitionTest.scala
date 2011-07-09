@@ -10,7 +10,10 @@ import org.scalatest.matchers.ShouldMatchers
 
 class StateTransitionTest extends FunSuite with ShouldMatchers {
   test("test alive transitions")  {
-    StateTransition(Alive)(Vector(Dead, Dead, Dead)) should be(Dead)
+    val state = Alive
+    val AliveTransition = StateTransition(state)
+
+    AliveTransition(Vector(Dead, Dead, Dead)) should be(Dead)
     StateTransition(Alive)(Vector(Alive, Alive, Dead)) should be(Alive)
     StateTransition(Alive)(Vector(Alive, Alive, Alive)) should be(Alive)
   }

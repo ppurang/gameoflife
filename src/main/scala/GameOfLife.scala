@@ -8,11 +8,8 @@ package game.of.life
  */
 
 object `package` {
-
   sealed trait State
-
   case object Alive extends State
-
   case object Dead extends State
 
   type NeighbourhoodState = Seq[State]
@@ -27,7 +24,7 @@ object `package` {
 
 object StateTransition extends (State => NeighbourhoodState => State) {
   def apply(present: State) = (ns:NeighbourhoodState) => present match {
-    case Alive => FilteredNeighbours(_ == Alive)(ns) match  {
+    case Alive => FilteredNeighbours(AlivePredicate)(ns) match  {
       case 2 | 3 => Alive
       case _ => Dead
     }
