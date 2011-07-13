@@ -17,7 +17,9 @@ On July 9 in Berlin at the Scout-lounge a [code-retreat](http://www.coderetreat-
 To clone this repo and fetch all the branches invoke
 
    > git clone https://github.com/ppurang/gameoflife
+
    > cd gameoflife
+
    > git fetch
 
 You should be on the master branch. Invoke the following to test that things are in order
@@ -58,9 +60,9 @@ To checkout a branch say BLANK
 
 and then you can rerun `sbt10` to see the effects of the changes in that branch. Now to the branches:
 
-    BLANK -> is a blank state supposed to be used as the starting point.
+    BLANK  -  is a blank state supposed to be used as the starting point.
 
-    master -> has a runnable demo of a possible implementation of game of life.
+    master -  has a runnable demo of a possible implementation of game of life.
 
 Other branches are results of pairing with different participants.
 
@@ -82,9 +84,11 @@ _Note:_ Readability is always in a beholders eyes. What might be too terse and u
 
 To simulate game of life on the command line
 
-    > git checkout master
-    > sbt10
-    auser> run 10 10 20
+   > git checkout master
+
+   > sbt10
+
+   auser> run 10 10 20
 
 The above will run a colony of size 10x10 through 20 generations.
 
