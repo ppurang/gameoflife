@@ -88,7 +88,7 @@ To simulate game of life on the command line
 
    > sbt10
 
-   auser> run 10 10 20
+   >auser> run 10 10 20
 
 The above will run a colony of size 10x10 through 20 generations.
 
