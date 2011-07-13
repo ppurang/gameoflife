@@ -1,23 +1,34 @@
 package game.of.life
 
-import java.lang.AssertionError
-import java.util.Random
-
 object `package` {
   type Neighbours = Seq[LifeCell]
   type NeighbourhoodState = Seq[State]
   type Rows = Int
   type Cols = Int
+  type Dice = () => State
+
+  sealed trait State
+  case object Dead extends State {
+    override def toString = " "
+  }
+  case object Alive extends State {
+    override def toString = "*"
+  }
+
+case class LifeCell(row: Int,
+                    col: Int,
+                    state: State,
+                    clock: Clock)
 
   case class Clock(time: Long) {
     def tik() = {
       Clock(time + 1)
     }
   }
+  object BigBang extends Clock(0)
 
-  type Dice = () => State
+  import java.util.Random
   private val random = new Random(System.nanoTime());
-
   implicit val DefaultDice = () => {
     random.nextDouble() match {
       case x if x > 0.5 => Alive
@@ -32,18 +43,6 @@ object `package` {
     }
   }
 
-  sealed trait State
-
-  case object Dead extends State {
-    override def toString = " "
-  }
-
-  case object Alive extends State {
-    override def toString = "*"
-  }
-
-  object BigBang extends Clock(0)
-
   val Directions: Vector[Direction] = Vector(North, NorthEast, East, SouthEast, South, SouthWest, West, NorthWest)
 
   /*
@@ -53,52 +52,49 @@ object `package` {
   */
   sealed trait Direction extends ((Int, Int) => (Int, Int))
 
-  case object North extends Direction {
+  private case object North extends Direction {  //could inline this stuff
     override def apply(row: Int, col: Int) = (row - 1, col)
   }
 
-  case object NorthEast extends Direction {
+  private case object NorthEast extends Direction {
     override def apply(row: Int, col: Int) = (row - 1, col + 1)
   }
 
-  case object East extends Direction {
+  private case object East extends Direction {
     override def apply(row: Int, col: Int) = (row, col + 1)
   }
 
-  case object SouthEast extends Direction {
+  private case object SouthEast extends Direction {
     override def apply(row: Int, col: Int) = (row + 1, col + 1)
   }
 
-  case object South extends Direction {
+  private case object South extends Direction {
     override def apply(row: Int, col: Int) = (row + 1, col)
   }
 
-  case object SouthWest extends Direction {
+  private case object SouthWest extends Direction {
     override def apply(row: Int, col: Int) = (row + 1, col - 1)
   }
 
-  case object West extends Direction {
+  private case object West extends Direction {
     override def apply(row: Int, col: Int) = (row, col - 1)
   }
 
-  case object NorthWest extends Direction {
+  private case object NorthWest extends Direction {
     override def apply(row: Int, col: Int) = (row - 1, col - 1)
   }
 }
 
-case class LifeCell(row: Int,
-                    col: Int,
-                    state: State,
-                    clock: Clock)
-
 object StateTransition extends (State => NeighbourhoodState => State) {
+  import annotation.switch
+
   def apply(state: State) = (n: NeighbourhoodState) => state match {
-    case Alive => n.filter(_ == Alive).size match {
-      case x: Int if !(x == 2 || x == 3) => Dead
-      case _ => state
+    case Alive => (n.filter(_ == Alive).size: @switch)  match { //other git branches have abstracted away this filtering
+      case 2 | 3 => state
+      case _ => Dead
     }
-    case Dead => n.filter(_ == Alive).size match {
-      case x: Int if x == 3 => Alive
+    case Dead => n.filter(_ == Alive).size match { //@switch doesn't work here strange!
+      case 3 => Alive
       case _ => state
     }
   }
@@ -136,16 +132,16 @@ trait MapRowsColsColony {
 
   def neighbours(cell: LifeCell): Seq[LifeCell] = {
     for (i <- neighbourhoodCoordinates(cell.row, cell.col);
-         n <- cells.get(i._1, i._2))
+         n <- cells.get(i._1, i._2))    //Nice!!!
     yield n
   }
 
   def neighbourhoodCoordinates(x: Int, y: Int) = {
-    for (d <- Directions) yield d(x, y)
+    for (d <- Directions) yield d(x, y) //Nice!!!
   }
 
   override def toString = (for (i <- 1 to rows) yield "\n" +
-          (for (j <- 1 to cols; cell <- cells.get(i, j)) yield cell.state).mkString("| ", " | ", " |")).mkString
+          (for (j <- 1 to cols; cell <- cells.get(i, j)) yield cell.state).mkString("| ", " | ", " |")).mkString //Nice!!!
 }
 
 object PrototypeColony {
@@ -165,7 +161,6 @@ object PrototypeColony {
     }
   }
 
-
   def apply(rows: Rows, cols: Cols, dice: Dice): Colony with MapRowsColsColony = {
     require(rows > 0, "rows need to be greater than 0 and not " + rows)
     require(cols > 0, "cols need to be greater than 0 and not " + cols)
@@ -184,7 +179,7 @@ object PrimordialSoup extends ((Rows, Cols, Dice) => Colony) {
 
 object GameOfLife {
   def main(args: Array[String]) {
-    require(args.length == 3, "Require 3 commandline inputs rows, cols and eras")
+    require(args.length == 3, "Require 3 commandline inputs: rows, cols and eras")
     val rows = args(0).toInt
     val cols = args(1).toInt
     val eras = args(2).toInt
