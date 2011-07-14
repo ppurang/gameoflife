@@ -99,10 +99,14 @@ Here are some nice things to have
 1. A proper GUI (different colors for clans)
 2. Recognizing if a colony lives for ever
    a. if history is repeated then i'd say yes
-   b. some patterns like **    *      **  never die
-                         **   * *    *  *
-                              * *    *  *
-                               *      **
+   b. some patterns like the following never die
+    <pre>
+    **    *      **
+    **   * *    *  *
+         * *    *  *
+          *      **
+    </pre>
+    Can you predict the next one?
 3. Replicating the patterns like Gosper's glider gun
 4. Better algos like quad tree with memoization
 5. Concept of signalling (something like biochemical signal/interaction between cell).
