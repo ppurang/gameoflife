@@ -92,3 +92,27 @@ To simulate game of life on the command line
 
 The above will run a colony of size 10x10 through 20 generations.
 
+## Taking it further
+
+Here are some nice things to have
+
+1. A proper GUI (different colors for clans)
+2. Recognizing if a colony lives for ever
+   a. if history is repeated then i'd say yes
+   b. some patterns like **    *      **  never die
+                         **   * *    *  *
+                              * *    *  *
+                               *      **
+3. Replicating the patterns like Gosper's glider gun
+4. Better algos like quad tree with memoization
+5. Concept of signalling (something like biochemical signal/interaction between cell).
+   for example take any cell and ask it to transform into the next generation this has a cascading effect on the neighbours and so forth
+7. Ever expanding universe - starts small, expands for ever
+8. Spontaneous eruption of life
+9 Cells that have different behaviour, i.e mutation and survival of the fittest (some are hardier than the others)
+(one idea: offsprings of different clans are hardier while genetically isolated generations wither faster)
+10. hexagonal cells
+11 more dimensions
+
+xx. All the above rolled into one :)
+
