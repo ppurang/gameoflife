@@ -113,10 +113,10 @@ Here are some nice things to have
    for example take any cell and ask it to transform into the next generation this has a cascading effect on the neighbours and so forth
 7. Ever expanding universe - starts small, expands for ever
 8. Spontaneous eruption of life
-9 Cells that have different behaviour, i.e mutation and survival of the fittest (some are hardier than the others)
+9.  Cells that have different behaviour, i.e mutation and survival of the fittest (some are hardier than the others)
 (one idea: offsprings of different clans are hardier while genetically isolated generations wither faster)
 10. hexagonal cells
-11 more dimensions
+11.  more dimensions
 
 xx. All the above rolled into one :)
 
