@@ -15,7 +15,7 @@ object `package` {
     override def toString = "*"
   }
 
-case class LifeCell(row: Int,
+  case class LifeCell(row: Int,
                     col: Int,
                     state: State,
                     clock: Clock)
@@ -25,6 +25,7 @@ case class LifeCell(row: Int,
       Clock(time + 1)
     }
   }
+
   object BigBang extends Clock(0)
 
   import java.util.Random
